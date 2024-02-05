@@ -1,20 +1,23 @@
-import { format } from 'date-fns'
 import Header from "../_components/Header";
-import { pt } from 'date-fns/locale';
 import { ptBR } from 'date-fns/locale/pt-BR';
-
+import { format } from 'date-fns'
+import Search from "./_components/Search";
 export default function Home() {
   return (
     <>
       <Header />
 
       <div className='p-5'>
-        <h2>Olá, seja bem vindo!</h2>
-        <p className='capitalize'>
-          {format(new Date(), 'EEEE, d MMMM', {
+        <h2 className='text-xl font-bold'>Olá, seja bem vindo!</h2>
+        <p className='capitalize text-sm'>
+          {format(new Date(), "EEEE, dd 'de' MMM", {
             locale: ptBR
           })}
         </p>
+      </div>
+
+      <div className="px-5 mt-6">
+        <Search />
       </div>
     </>
   );
