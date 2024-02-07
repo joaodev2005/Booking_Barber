@@ -1,10 +1,19 @@
+"use client"
+
 import { Badge } from '@/app/_components/ui/badge'
 import { Button } from '@/app/_components/ui/button'
 import { Card, CardContent } from '@/app/_components/ui/card'
 import { StarIcon } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const BarbershopItem = ({ item }: { item: any }) => {
+
+    const router = useRouter()
+
+    const handleBookingClick = () => {
+        router.push(`/barbershops/${item.id}`)
+    }
 
     return (
         <Card className='min-w-[167px] max-w-[167px] rounded-2xl'>
@@ -27,7 +36,9 @@ const BarbershopItem = ({ item }: { item: any }) => {
                 <div className='px-2 pb-3'>
                     <h2 className='font-bold overflow-hidden text-ellipsis text-nowrap mt-2'>{item.name}</h2>
                     <p className='text-sm text-gray-400 overflow-hidden text-ellipsis text-nowrap'>{item.address}</p>
-                    <Button className='w-full mt-3' variant="secondary">Agendar</Button>
+                    <Button className='w-full mt-3' variant="secondary" onClick={handleBookingClick}>
+                        Agendar
+                    </Button>
                 </div>
             </CardContent>
         </Card>
