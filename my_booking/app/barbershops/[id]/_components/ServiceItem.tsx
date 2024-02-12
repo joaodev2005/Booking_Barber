@@ -34,3 +34,5 @@ const ServiceItem = ({ item }: { item: any }) => {
 }
 
 export default ServiceItem
+
+
