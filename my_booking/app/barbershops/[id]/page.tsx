@@ -35,7 +35,7 @@ const BarbershopDetailsPage = () => {
             </div>
 
             <div className="px-5 flex flex-col gap-4 py-3">
-                 {showServices && services.map((service) => (
+                {showServices && services.map((service) => (
                     <ServiceItem key={service.id} item={service} />
                 ))}
             </div>
