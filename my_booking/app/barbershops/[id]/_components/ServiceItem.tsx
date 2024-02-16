@@ -3,14 +3,23 @@ import { Calendar } from '@/app/_components/ui/calendar'
 import { Card, CardContent } from '@/app/_components/ui/card'
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/app/_components/ui/sheet'
 import { ptBR } from 'date-fns/locale'
-import Image from 'next/image'
-import React, { useState } from 'react'
 import { generateDayTimeList } from '../_helpers/hours'
 import { format } from 'date-fns'
+import { toast } from 'sonner'
+
+import { useRouter } from 'next/navigation'
+
+import Image from 'next/image'
+
+import React, { useState } from 'react'
+
 
 const ServiceItem = ({ item }: { item: any }) => {
+    const router = useRouter()
+
     const [date, setDate] = React.useState<Date | undefined>(new Date())
     const [hour, setHour] = useState<string | undefined>()
+    const [sheetIsOpen, setSheetIsOpen] = useState(false)
 
     const timeList = generateDayTimeList(date!);
 
@@ -21,6 +30,36 @@ const ServiceItem = ({ item }: { item: any }) => {
 
     const handleHourClick = (hour: string) => {
         setHour(hour)
+    }
+
+    const handleBookingSubmit = () => {
+
+        if (!date || !hour) {
+            return;
+        }
+
+        const newDate = new Date(date);
+       
+        const [hourPart, minutePart] = hour.split(":");
+
+        const newHour = new Date();
+        newHour.setHours(parseInt(hourPart), parseInt(minutePart));
+
+        const formattedDate = format(newDate, "'Para' dd 'de' MMMM", { locale: ptBR });
+        const formattedHour = format(newHour, "'às' HH:mm");
+
+        setSheetIsOpen(false);
+
+        setHour(undefined);
+        setDate(undefined);
+
+        toast("Reserva efetuada com sucesso!", {
+            description: `${formattedDate} ${formattedHour}`,
+            action: {
+                label: "Visualizar",
+                onClick: () => router.push(`/bookings`),
+            }
+        })
     }
 
     return (
@@ -43,7 +82,7 @@ const ServiceItem = ({ item }: { item: any }) => {
                         <div className="flex items-center justify-between mt-2">
                             <p className='font-bold text-primary text-sm'>R$ {item.price.toFixed(2)}</p>
 
-                            <Sheet>
+                            <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
                                 <SheetTrigger asChild>
                                     <Button variant="secondary">
                                         Reservar
@@ -143,7 +182,7 @@ const ServiceItem = ({ item }: { item: any }) => {
                                     </div>
 
                                     <SheetFooter className='px-5'>
-                                        <Button disabled={!date || !hour}>
+                                        <Button onClick={handleBookingSubmit} disabled={!date || !hour} className='w-full'>
                                             Confirmar Reserva
                                         </Button>
                                     </SheetFooter>
@@ -158,9 +197,3 @@ const ServiceItem = ({ item }: { item: any }) => {
 }
 
 export default ServiceItem
-
-
-function useMemo(arg0: () => string[], arg1: (Date | undefined)[]) {
-    throw new Error('Function not implemented.')
-}
-

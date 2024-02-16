@@ -33,10 +33,9 @@ export default function Home() {
         <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Agendamentos</h2>
         <BookingItem />
       </div>
-
+      
       <div className="mt-6">
         <h2 className="px-5 text-xs uppercase text-gray-400 font-bold mb-3">recomendados</h2>
-
         <div className="px-5 flex gap-4 overflow-x-auto [&::webkit-scrollbar]:hidden">
           {items.map((item) => (
             <BarbershopItem key={item.id} item={item} />
