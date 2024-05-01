@@ -1,3 +1,3 @@
 <h1>EM DESENVOLVIMENTO 👷🏻‍♂️</h1>
 
-versão desktop quase pronta 📱
+Versão mobile quase pronta 📱
